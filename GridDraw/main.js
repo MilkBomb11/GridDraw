@@ -140,49 +140,7 @@ function run()
   for (var i = 0; i < tokens.length; i++)
   {
     let token = tokens[i]
-    if (token.name === "p")
-    {
-      cells[token.parameters[0]][token.parameters[1]].color = currentColor
-    }
-    else if (token.name === "color")
-    {
-      currentColor = color(token.parameters[0], token.parameters[1], token.parameters[2])
-    }
-    else if (token.name === "rect")
-    {
-      let x = token.parameters[0]
-      let y = token.parameters[1]
-      let w = token.parameters[2]
-      let h = token.parameters[3]
-
-      for (let i = 0; i < w; i++)
-      {
-        for (let j = 0; j < h; j++)
-        {
-          if (x+i < winW/cellSize && y+j < winH/cellSize)
-          {
-            cells[x+i][y+j].color = currentColor
-          }
-        }
-      }
-    }
-    else if (token.name === "circle")
-    {
-      let x = token.parameters[0]
-      let y = token.parameters[1]
-      let r = token.parameters[2]
-
-      for (let i = 0; i < winW/cellSize; i++)
-      {
-        for (let j = 0; j < winH/cellSize; j++)
-        {
-          if ((x-i)*(x-i) + (y-j)*(y-j) < int(r*r))
-          {
-            cells[i][j].color = currentColor
-          }
-        }
-      }
-    }
+    tokenActionHandler[token.name].action(token)
   }
 }
 
